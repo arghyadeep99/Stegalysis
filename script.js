@@ -34,6 +34,7 @@ function previewImage(file, canvasSelector, callback) {
 
   reader.onloadend = function () {
     image.src = URL.createObjectURL(file);
+    // console.log(image.src);
 
     image.onload = function() {
       $canvas.prop({
@@ -85,6 +86,8 @@ function encodeMessage() {
   });
 
   // Normalize the original image and draw it
+  // data = 1 2 3 255 4 5 6 255
+
   var original = originalContext.getImageData(0, 0, width, height);
   var pixel = original.data;
   for (var i = 0, n = pixel.length; i < n; i += 4) {
@@ -99,6 +102,8 @@ function encodeMessage() {
   // Convert the message to a binary string
   var binaryMessage = "";
   for (i = 0; i < text.length; i++) {
+    // a => unicode => int => string (binary)
+
     var binaryChar = text[i].charCodeAt(0).toString(2);
 
     // Pad with 0 until the binaryChar has a lenght of 8 (1 Byte)
@@ -111,6 +116,7 @@ function encodeMessage() {
   $('.binary textarea').text(binaryMessage);
 
   // Apply the binary string to the image and draw it
+  // 40 length ka binary string
   var message = nulledContext.getImageData(0, 0, width, height);
   pixel = message.data;
   counter = 0;
