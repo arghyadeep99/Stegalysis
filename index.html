@@ -42,6 +42,9 @@
 
         <div class="error" style="display: none;"></div>
         <div class="binary" style="display: none;">
+          <h3>Cipher text</h3>
+            <input type="text" class="cipher-message" placeholder="Caesar cipher of your text will appear here" readonly></input>
+        </div>        <div class="binary" style="display: none;">
           <h3>Binary representation of your message</h3>
           <textarea class="form-control message" style="word-wrap:break-word;">
           </textarea>
@@ -80,9 +83,12 @@
           <div class="clearfix"></div>
         </div>
         <div class="binary-decode" style="display: none;">
-          <h3>Hidden message</h3>
+          <h3>Hidden cipher message</h3>
           <textarea class="form-control message" style="word-wrap:break-word;">
           </textarea>
+          <h3>Hidden message</h3>
+          <input type="text" class="form-control message-decoded" style="word-wrap:break-word;">
+          </input>
         </div>
         <div class="decode" style="display: none;">
           <h3>Input</h3>

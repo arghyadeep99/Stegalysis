@@ -49,11 +49,22 @@ function previewImage(file, canvasSelector, callback) {
   }
 }
 
+let caesarCipher = (str, key) => {
+
+  return str.toUpperCase().replace(/[A-Z]/g, c => String.fromCharCode((c.charCodeAt(0)-65 + key ) % 26 + 65));
+
+}
+
 function encodeMessage() {
   $(".error").hide();
   $(".binary").hide();
 
   var text = $("textarea.message").val();
+  text = caesarCipher(text, 5);
+  var cipherRegion = $('.cipher-message')[0];
+  // console.log(cipherRegion);
+  // console.log(text);
+  cipherRegion.value = text;
 
   var $originalCanvas = $('.original canvas');
   var $nulledCanvas = $('.nulled canvas');
@@ -167,6 +178,8 @@ function decodeMessage() {
     output += String.fromCharCode(c);
   }
 
-  $('.binary-decode textarea').text(output);
+  $('.binary-decode textarea')[0].value = output;
+  $('.binary-decode input')[0].value = caesarCipher(output, 21);
   $('.binary-decode').fadeIn();
+
 };
