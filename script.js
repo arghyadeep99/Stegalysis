@@ -111,7 +111,7 @@ function encodeMessage() {
   // Check if the image is big enough to hide the message
   if ((text.length * 8) > (width * height * 3)) {
     $(".error")
-      .text("Text too long for chosen image....")
+      .text("Text too long!")
       .fadeIn();
 
     return;
