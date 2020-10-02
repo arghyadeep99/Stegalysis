@@ -44,12 +44,22 @@ function previewImage(file, canvasSelector, callback) {
       canvasWidth = 0;
       canvasHeight = 0;
 
-      if (image.width < 0.7*screen.availWidth) {
-        canvasWidth = image.width;
-        canvasHeight = image.height;
+      if (image.width >= image.height) {
+        if (image.width < 0.7*screen.availWidth) {
+          canvasWidth = image.width;
+          canvasHeight = image.height;
+        } else {
+          canvasWidth = 0.7*screen.availWidth;
+          canvasHeight = (image.height*0.7*screen.availWidth)/image.width;
+        }  
       } else {
-        canvasWidth = 0.7*screen.availWidth;
-        canvasHeight = (image.height*0.7*screen.availWidth)/image.width;
+        if (image.height < 0.7*screen.availHeight) {
+          canvasWidth = image.width;
+          canvasHeight = image.height;
+        } else {
+          canvasHeight = 0.7*screen.availHeight;
+          canvasWidth = (image.width*0.7*screen.availHeight)/image.height;
+        }  
       }
 
       $canvas.prop({
