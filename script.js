@@ -5,6 +5,8 @@ $('button.encode, button.decode').click(function(event) {
 function previewDecodeImage() {
   var file = document.querySelector('input[name=decodeFile]').files[0];
 
+  $(".binary-decode").hide();
+
   previewImage(file, ".decode canvas", function() {
     $(".decode").fadeIn();
   });
@@ -15,6 +17,7 @@ function previewEncodeImage() {
 
   $(".images .nulled").hide();
   $(".images .message").hide();
+  $(".binary").hide();
 
   previewImage(file, ".original canvas", function() {
     $(".images .original").fadeIn();
@@ -37,12 +40,25 @@ function previewImage(file, canvasSelector, callback) {
     // console.log(image.src);
 
     image.onload = function() {
+      
+      canvasWidth = 0;
+      canvasHeight = 0;
+
+      if (image.width < 0.7*screen.availWidth) {
+        canvasWidth = image.width;
+        canvasHeight = image.height;
+      } else {
+        canvasWidth = 0.7*screen.availWidth;
+        canvasHeight = (image.height*0.7*screen.availWidth)/image.width;
+      }
+
       $canvas.prop({
-        'width': image.width,
-        'height': image.height
+        'width': canvasWidth,
+        'height': canvasHeight
       });
 
-      context.drawImage(image, 0, 0);
+      context.drawImage(image, 0, 0, image.width, image.height,  // source rectangle
+                               0, 0, canvasWidth, canvasHeight);  // destination rectangle
 
       callback();
     }
