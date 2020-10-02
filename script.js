@@ -51,8 +51,13 @@ function previewImage(file, canvasSelector, callback) {
 
 let caesarCipher = (str, key) => {
 
-  return str.toUpperCase().replace(/[A-Z]/g, c => String.fromCharCode((c.charCodeAt(0)-65 + key ) % 26 + 65));
+  str = str.replace(/[A-Z]/g, c => String.fromCharCode((c.charCodeAt(0)-65 + key ) % 26 + 65));
+  return str.replace(/[a-z]/g, c => String.fromCharCode((c.charCodeAt(0)-97 + key ) % 26 + 97));
 
+}
+
+let isValid = (char) => {
+  return char >= 32 && char <= 126;
 }
 
 function encodeMessage() {
@@ -155,28 +160,42 @@ function decodeMessage() {
 
   var original = originalContext.getImageData(0, 0, $originalCanvas.width(), $originalCanvas.height());
   var binaryMessage = "";
-  var pixel = original.data;
-  for (var i = 0, n = pixel.length; i < n; i += 4) {
-    for (var offset =0; offset < 3; offset ++) {
-      var value = 0;
-      if(pixel[i + offset] %2 != 0) {
-        value = 1;
-      }
-
-      binaryMessage += value;
-    }
-  }
-
   var output = "";
-  for (var i = 0; i < binaryMessage.length; i += 8) {
-    var c = 0;
-    for (var j = 0; j < 8; j++) {
-      c <<= 1;
-      c |= parseInt(binaryMessage[i + j]);
+  var pixel = original.data;
+  var stop = false;
+  for (var i = 0, n = pixel.length; i < n; i += 4) {
+    if (!stop) {
+      for (var offset =0; offset < 3; offset ++) {
+        var value = 0;
+        if(pixel[i + offset] %2 != 0) {
+          value = 1;
+        }
+  
+        binaryMessage += value;
+        if (binaryMessage.length == 8) {
+          charAscii = parseInt(binaryMessage, 2);
+          if (isValid(charAscii)) {
+            output += String.fromCharCode(charAscii);
+            binaryMessage = "";
+          }
+          else {
+            stop = true;
+            break;
+          }
+        }
+      }
     }
-
-    output += String.fromCharCode(c);
   }
+
+  // for (var i = 0; i < binaryMessage.length; i += 8) {
+  //   var c = 0;
+  //   for (var j = 0; j < 8; j++) {
+  //     c <<= 1;
+  //     c |= parseInt(binaryMessage[i + j]);
+  //   }
+
+  //   output += String.fromCharCode(c);
+  // }
 
   $('.binary-decode textarea')[0].value = output;
   $('.binary-decode input')[0].value = caesarCipher(output, 21);
