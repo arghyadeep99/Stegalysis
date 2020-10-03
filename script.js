@@ -104,7 +104,7 @@ function encodeMessage() {
   var cipherRegion = $('.cipher-message')[0];
   // console.log(cipherRegion);
   // console.log(text);
-  cipherRegion.value = text;
+  cipherRegion.innerHTML = text;
 
   var $originalCanvas = $('.original canvas');
   var $nulledCanvas = $('.nulled canvas');
