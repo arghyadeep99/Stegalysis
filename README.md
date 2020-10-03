@@ -7,7 +7,7 @@
 
 <br>
 
-[![](https://img.shields.io/badge/Made_with-JavaScript-red?style=for-the-badge&logo=javascript)](https://flask.palletsprojects.com/en/1.1.x/)
+[![](https://img.shields.io/badge/Made_with-JavaScript-red?style=for-the-badge&logo=javascript)](https://javascript.com "JavaScript-ES6")
 [![](https://img.shields.io/badge/Deployed_on-GitHub_Pages-red?style=for-the-badge&logo=github)](https://www.github.com/  "GitHub")
 
 <br>
@@ -33,7 +33,7 @@ Since the image was normalized, we now know that an **even** r, g or b value is 
 
 ## Additional layers of security
 
-Steganography is no means of encryption, just a way to hide data from plain sight. But one can, for example, hide a PGP-encrypted message inside an image. So even if the image did not go unnoticed, the message would still only  be readable by the person it was addressed to. From our side, we add an extra Caesar cipher to increase security. 
+Steganography is no means of encryption, just a way to hide data from plain sight. But one can, for example, hide a PGP-encrypted message inside an image. So even if the image did not go unnoticed, the message would still only  be readable by the person it was addressed to. From our side, we add an extra Caesar cipher to increase security for demonstration purpose. 
 
 ---
 
@@ -46,16 +46,27 @@ Steganography is no means of encryption, just a way to hide data from plain sigh
 </div>
 
 <div align="center">
-<h4 align="center">Decoding</h4>
 <img src="./screenshots/ss2.png" width=900px/>
 <br>
 </div>
 
 <div align="center">
-<img src="./screenshots/ss3.jpeg" width=900px/>
+<img src="./screenshots/ss3.png" width=900px/>
 <br>
 </div>
----
+
+
+<div align="center">
+<h4 align="center">Decoding</h4>
+<img src="./screenshots/ss4.png" width=900px/>
+<br>
+</div>
+
+<div align="center">
+<img src="./screenshots/ss5.png" width=900px/>
+<br>
+</div>
+
 
 ### Future scope of this project:
 
@@ -65,11 +76,11 @@ Steganography is no means of encryption, just a way to hide data from plain sigh
 ### Tech Stack of this Project:
 
 * Frontend: HTML/CSS
-* Backend: JavaScript
+* Backend: JavaScript-ES6
 
 ### To try the webapp:
 
-* Visit [Stegalysis](https://arghyadeepdas.tech/Stegalysis/)
+* Visit [Stegalysis](https://arghyadeepdas.tech/Stegalysis/).
 
 For encoding:
 * In the Encode tab, upload an image. 
