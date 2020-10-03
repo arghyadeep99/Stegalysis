@@ -86,6 +86,15 @@ let isValid = (char) => {
   return char >= 32 && char <= 126;
 }
 
+let downloadFinalImage = () => {
+  var data = $(".message canvas")[0].toDataURL();
+  var a = document.createElement("a"); //Create <a>
+  a.href = data; //Image Base64 Goes here
+  console.log(a.href);  
+  a.download = "image.png"; //File name Here
+  a.click(); //Downloaded file
+}
+
 function encodeMessage() {
   $(".error").hide();
   $(".binary").hide();
@@ -107,6 +116,27 @@ function encodeMessage() {
 
   var width = $originalCanvas[0].width;
   var height = $originalCanvas[0].height;
+
+    // Check if canvas is empty
+    if (!originalContext
+    .getImageData(0, 0, width, height)
+    .data
+    .some(channel => channel !== 0)) {
+      $(".error")
+        .text("Please select an image!")
+        .fadeIn();
+  
+      return;
+    }  
+
+  // Check if text is empty
+  if (text.length  == 0) {
+    $(".error")
+      .text("Please enter the text to encode!")
+      .fadeIn();
+
+    return;
+  }
 
   // Check if the image is big enough to hide the message
   if ((text.length * 8) > (width * height * 3)) {
