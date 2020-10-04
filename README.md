@@ -41,31 +41,17 @@ Steganography is no means of encryption, just a way to hide data from plain sigh
 
 <div align="center">
 <h4 align="center">Encoding</h4>
-<img src="./screenshots/ss1.png" width=900px/>
-<br>
-</div>
-
-<div align="center">
-<img src="./screenshots/ss2.png" width=900px/>
-<br>
-</div>
-
-<div align="center">
-<img src="./screenshots/ss3.png" width=900px/>
-<br>
+<img src="./screenshots/lss1.png" width=900px/>
+<br><br><br>
 </div>
 
 
 <div align="center">
 <h4 align="center">Decoding</h4>
-<img src="./screenshots/ss4.png" width=900px/>
+<img src="./screenshots/lss2.png" width=900px/>
 <br>
 </div>
 
-<div align="center">
-<img src="./screenshots/ss5.png" width=900px/>
-<br>
-</div>
 
 
 ### Future scope of this project:
