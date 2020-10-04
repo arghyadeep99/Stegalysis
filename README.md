@@ -88,7 +88,7 @@ For decoding:
 	* Goto your fork and create a pull request.
 	* We will test your modifications and merge changes.
 
-This project was done as an assignment of our lab course `Cryptography and Security Systems`.
+This project was done as an assignment of our lab course `Cryptography & System  Security`.
 
 ---
 <h3 align="center"><b>Developed with :heart: by <a href="https://github.com/g-bhagwanani">Gaurav Bhagwanani</a>, <a href="https://github.com/arghyadeep99">Arghyadeep Das</a> and <a href="https://github.com/GaurangAthavale">Gaurang Athavale</a>.</b></h1>
