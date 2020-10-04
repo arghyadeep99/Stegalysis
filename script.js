@@ -83,14 +83,14 @@ let caesarCipher = (str, key) => {
 }
 
 let isValid = (char) => {
-  return char >= 32 && char <= 126;
+  return (char >= 32 && char <= 126) || (char == 13) || (char == 10);
 }
 
 let downloadFinalImage = () => {
   var data = $(".message canvas")[0].toDataURL();
   var a = document.createElement("a"); //Create <a>
   a.href = data; //Image Base64 Goes here
-  console.log(a.href);  
+  // console.log(a.href);  
   a.download = "image.png"; //File name Here
   a.click(); //Downloaded file
 }
@@ -104,7 +104,7 @@ function encodeMessage() {
   var cipherRegion = $('.cipher-message')[0];
   // console.log(cipherRegion);
   // console.log(text);
-  cipherRegion.innerHTML = text;
+  cipherRegion.value = text;
 
   var $originalCanvas = $('.original canvas');
   var $nulledCanvas = $('.nulled canvas');
@@ -176,6 +176,7 @@ function encodeMessage() {
   for (i = 0; i < text.length; i++) {
     // a => unicode => int => string (binary)
 
+    // console.log(text[i].charCodeAt(0));
     var binaryChar = text[i].charCodeAt(0).toString(2);
 
     // Pad with 0 until the binaryChar has a lenght of 8 (1 Byte)
@@ -254,7 +255,7 @@ function decodeMessage() {
   // }
 
   $('.binary-decode textarea')[0].value = output;
-  $('.binary-decode input')[0].value = caesarCipher(output, 21);
+  $('.binary-decode .message-decoded')[0].value = caesarCipher(output, 21);
   $('.binary-decode').fadeIn();
 
 };
