@@ -215,6 +215,21 @@ function decodeMessage() {
   var $originalCanvas = $('.decode canvas');
   var originalContext = $originalCanvas[0].getContext("2d");
 
+  var width = $originalCanvas[0].width
+  var height = $originalCanvas[0].height
+
+  // Check if canvas is empty
+  if (!originalContext
+    .getImageData(0, 0, width, height)
+    .data
+    .some(channel => channel !== 0)) {
+      $(".error")
+        .text("Please select an image!")
+        .fadeIn();
+  
+      return;
+    }
+
   var original = originalContext.getImageData(0, 0, $originalCanvas.width(), $originalCanvas.height());
   var binaryMessage = "";
   var output = "";
