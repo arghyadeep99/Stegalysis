@@ -1,28 +1,53 @@
-$('button.encode, button.decode').click(function(event) {
+var allExtensions = ["png", "jpeg", "jpg", "bmp"], thisExtension;
+function removeError(){
+  $(".error").hide();
+}
+function handleIfNotImage(file, i) {
+  thisExtension = file.name.split(".")[1];
+  // console.log
+  if (allExtensions.includes(thisExtension)) {
+    console.log("no issues");
+    $(".error").hide();
+    return true;
+  } else {
+    document.getElementsByTagName("button")[i].disabled = true;
+    $(".error")
+      .text("Please select an image!")
+      .fadeIn();
+    return false;
+  }
+}
+
+$('button.encode, button.decode').click(function (event) {
   event.preventDefault();
 });
 
 function previewDecodeImage() {
+  document.getElementsByTagName("button")[2].disabled = false;
   var file = document.querySelector('input[name=decodeFile]').files[0];
+  if (handleIfNotImage(file, 2)) {
+    $(".binary-decode").hide();
 
-  $(".binary-decode").hide();
-
-  previewImage(file, ".decode canvas", function() {
-    $(".decode").fadeIn();
-  });
+    previewImage(file, ".decode canvas", function () {
+      $(".decode").fadeIn();
+    });
+  }
 }
 
 function previewEncodeImage() {
+  document.getElementsByTagName("button")[0].disabled = false;
   var file = document.querySelector("input[name=baseFile]").files[0];
+  // console.log(file);
+  if (handleIfNotImage(file, 0)) {
+    $(".images .nulled").hide();
+    $(".images .message").hide();
+    $(".binary").hide();
 
-  $(".images .nulled").hide();
-  $(".images .message").hide();
-  $(".binary").hide();
-
-  previewImage(file, ".original canvas", function() {
-    $(".images .original").fadeIn();
-    $(".images").fadeIn();
-  });
+    previewImage(file, ".original canvas", function () {
+      $(".images .original").fadeIn();
+      $(".images").fadeIn();
+    });
+  }
 }
 
 function previewImage(file, canvasSelector, callback) {
@@ -39,27 +64,27 @@ function previewImage(file, canvasSelector, callback) {
     image.src = URL.createObjectURL(file);
     // console.log(image.src);
 
-    image.onload = function() {
-      
+    image.onload = function () {
+
       canvasWidth = 0;
       canvasHeight = 0;
 
       if (image.width >= image.height) {
-        if (image.width < 0.7*screen.availWidth) {
+        if (image.width < 0.7 * screen.availWidth) {
           canvasWidth = image.width;
           canvasHeight = image.height;
         } else {
-          canvasWidth = 0.7*screen.availWidth;
-          canvasHeight = (image.height*0.7*screen.availWidth)/image.width;
-        }  
+          canvasWidth = 0.7 * screen.availWidth;
+          canvasHeight = (image.height * 0.7 * screen.availWidth) / image.width;
+        }
       } else {
-        if (image.height < 0.7*screen.availHeight) {
+        if (image.height < 0.7 * screen.availHeight) {
           canvasWidth = image.width;
           canvasHeight = image.height;
         } else {
-          canvasHeight = 0.7*screen.availHeight;
-          canvasWidth = (image.width*0.7*screen.availHeight)/image.height;
-        }  
+          canvasHeight = 0.7 * screen.availHeight;
+          canvasWidth = (image.width * 0.7 * screen.availHeight) / image.height;
+        }
       }
 
       $canvas.prop({
@@ -68,7 +93,7 @@ function previewImage(file, canvasSelector, callback) {
       });
 
       context.drawImage(image, 0, 0, image.width, image.height,  // source rectangle
-                               0, 0, canvasWidth, canvasHeight);  // destination rectangle
+        0, 0, canvasWidth, canvasHeight);  // destination rectangle
 
       callback();
     }
@@ -77,8 +102,8 @@ function previewImage(file, canvasSelector, callback) {
 
 let caesarCipher = (str, key) => {
 
-  str = str.replace(/[A-Z]/g, c => String.fromCharCode((c.charCodeAt(0)-65 + key ) % 26 + 65));
-  return str.replace(/[a-z]/g, c => String.fromCharCode((c.charCodeAt(0)-97 + key ) % 26 + 97));
+  str = str.replace(/[A-Z]/g, c => String.fromCharCode((c.charCodeAt(0) - 65 + key) % 26 + 65));
+  return str.replace(/[a-z]/g, c => String.fromCharCode((c.charCodeAt(0) - 97 + key) % 26 + 97));
 
 }
 
@@ -117,20 +142,20 @@ function encodeMessage() {
   var width = $originalCanvas[0].width;
   var height = $originalCanvas[0].height;
 
-    // Check if canvas is empty
-    if (!originalContext
+  // Check if canvas is empty
+  if (!originalContext
     .getImageData(0, 0, width, height)
     .data
     .some(channel => channel !== 0)) {
-      $(".error")
-        .text("Please select an image!")
-        .fadeIn();
-  
-      return;
-    }  
+    $(".error")
+      .text("Please select an image!")
+      .fadeIn();
+
+    return;
+  }
 
   // Check if text is empty
-  if (text.length  == 0) {
+  if (text.length == 0) {
     $(".error")
       .text("Please enter the text to encode!")
       .fadeIn();
@@ -163,8 +188,8 @@ function encodeMessage() {
   var original = originalContext.getImageData(0, 0, width, height);
   var pixel = original.data;
   for (var i = 0, n = pixel.length; i < n; i += 4) {
-    for (var offset =0; offset < 3; offset ++) {
-      if(pixel[i + offset] %2 != 0) {
+    for (var offset = 0; offset < 3; offset++) {
+      if (pixel[i + offset] % 2 != 0) {
         pixel[i + offset]--;
       }
     }
@@ -180,7 +205,7 @@ function encodeMessage() {
     var binaryChar = text[i].charCodeAt(0).toString(2);
 
     // Pad with 0 until the binaryChar has a lenght of 8 (1 Byte)
-    while(binaryChar.length < 8) {
+    while (binaryChar.length < 8) {
       binaryChar = "0" + binaryChar;
     }
 
@@ -194,7 +219,7 @@ function encodeMessage() {
   pixel = message.data;
   counter = 0;
   for (var i = 0, n = pixel.length; i < n; i += 4) {
-    for (var offset =0; offset < 3; offset ++) {
+    for (var offset = 0; offset < 3; offset++) {
       if (counter < binaryMessage.length) {
         pixel[i + offset] += parseInt(binaryMessage[counter]);
         counter++;
@@ -223,12 +248,12 @@ function decodeMessage() {
     .getImageData(0, 0, width, height)
     .data
     .some(channel => channel !== 0)) {
-      $(".error")
-        .text("Please select an image!")
-        .fadeIn();
-  
-      return;
-    }
+    $(".error")
+      .text("Please select an image!")
+      .fadeIn();
+
+    return;
+  }
 
   var original = originalContext.getImageData(0, 0, $originalCanvas.width(), $originalCanvas.height());
   var binaryMessage = "";
@@ -237,12 +262,12 @@ function decodeMessage() {
   var stop = false;
   for (var i = 0, n = pixel.length; i < n; i += 4) {
     if (!stop) {
-      for (var offset =0; offset < 3; offset ++) {
+      for (var offset = 0; offset < 3; offset++) {
         var value = 0;
-        if(pixel[i + offset] %2 != 0) {
+        if (pixel[i + offset] % 2 != 0) {
           value = 1;
         }
-  
+
         binaryMessage += value;
         if (binaryMessage.length == 8) {
           charAscii = parseInt(binaryMessage, 2);
